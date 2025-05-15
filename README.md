@@ -1,3 +1,6 @@
+# UTblockchain_practice_contract
+東大ブロックチェーン公開講座の「スマコン開発学習」1回目演習
+
 ## Foundry
 
 **Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
