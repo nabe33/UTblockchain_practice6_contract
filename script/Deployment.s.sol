@@ -18,7 +18,6 @@ contract Deployment is Script {
             vm.toString(address(c))
         );
         console.log(string(encodedData));
-        console.log("deployed address: ", address(c));
-        console.log("Private key: ", deployerPrivateKey);
+        console.log("Private key: ", vm.toString(deployerPrivateKey));
     }
 }
