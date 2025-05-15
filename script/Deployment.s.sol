@@ -7,6 +7,8 @@ import "../src/Counter.sol";
 contract Deployment is Script {
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+        string memory deployerPrivateKeyHex = vm.envString("PRIVATE_KEY");
+
         vm.startBroadcast(deployerPrivateKey);
 
         Counter c = new Counter();
@@ -18,6 +20,6 @@ contract Deployment is Script {
             vm.toString(address(c))
         );
         console.log(string(encodedData));
-        console.log("Private key: ", vm.toString(deployerPrivateKey));
+        console.log("Private key: ", deployerPrivateKeyHex);
     }
 }
