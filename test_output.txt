@@ -1,0 +1,29 @@
+$ forge test -vv
+[⠊] Compiling...
+[⠰] Compiling 1 files with Solc 0.8.28
+[⠔] Solc 0.8.28 finished in 365.45ms
+Compiler run successful!
+
+Ran 3 tests for test/VariavbleExampleTest.sol:VariableExampleTest
+[PASS] testDifferenceBetweenMemberAndLocal() (gas: 23793)
+Logs:
+  Local variable result is correct: 60
+  Member variable update is correct. Before: 100 After: 150
+
+[PASS] testLocalVariable() (gas: 13425)
+Logs:
+  Local variable calculation is correct: 30
+
+[PASS] testMemberVariable() (gas: 22140)
+Logs:
+  Initial value of memberVariable is correct: 100
+  Updated value of memberVariable is correct: 200
+
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 5.91ms (4.04ms CPU time)
+
+Ran 2 tests for test/Counter.t.sol:CounterTest
+[PASS] testFuzz_SetNumber(uint256) (runs: 256, μ: 32087, ~: 32398)
+[PASS] test_Increment() (gas: 31895)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 8.36ms (4.62ms CPU time)
+
+Ran 2 test suites in 120.87ms (14.27ms CPU time): 5 tests passed, 0 failed, 0 skipped (5 total tests)
