@@ -13,11 +13,7 @@ contract DataLocationExampleTest is Test {
 
     function testModifyStorage() public {
         // 初期状態でstorageArrayは空
-        assertEq(
-            example.storageArrayLength(),
-            0,
-            "storageArray should be empty initially"
-        );
+        assertEq(example.storageArrayLength(), 0, "storageArray should be empty initially");
 
         // modifyStorageを呼び出すとstorageArrayに1つ追加される
         example.modifyStorage();
@@ -28,15 +24,8 @@ contract DataLocationExampleTest is Test {
         // さらにもう一度呼び出すと2つになる
         example.modifyStorage();
         len = example.storageArrayLength();
-        assertEq(
-            len,
-            2,
-            "storageArray length should be 2 after second modifyStorage"
-        );
-        console.log(
-            "storageArray length after second modifyStorage is correct:",
-            len
-        );
+        assertEq(len, 2, "storageArray length should be 2 after second modifyStorage");
+        console.log("storageArray length after second modifyStorage is correct:", len);
     }
 
     function testProcessMemory() public view {
@@ -60,9 +49,8 @@ contract DataLocationExampleTest is Test {
         arr[2] = 30;
 
         // calldataはexternal関数なので、callで呼び出す
-        (bool success, bytes memory data) = address(example).call(
-            abi.encodeWithSignature("processCalldata(uint256[])", arr)
-        );
+        (bool success, bytes memory data) =
+            address(example).call(abi.encodeWithSignature("processCalldata(uint256[])", arr));
         require(success, "processCalldata call failed");
 
         uint256 result = abi.decode(data, (uint256));
@@ -81,27 +69,13 @@ contract DataLocationExampleTest is Test {
         // modifyStorageで1つ追加
         example.modifyStorage();
         len = example.storageArrayLength();
-        assertEq(
-            len,
-            1,
-            "storageArrayLength should be 1 after one modifyStorage"
-        );
-        console.log(
-            "storageArrayLength is correct after one modifyStorage:",
-            len
-        );
+        assertEq(len, 1, "storageArrayLength should be 1 after one modifyStorage");
+        console.log("storageArrayLength is correct after one modifyStorage:", len);
 
         // さらに追加
         example.modifyStorage();
         len = example.storageArrayLength();
-        assertEq(
-            len,
-            2,
-            "storageArrayLength should be 2 after two modifyStorage"
-        );
-        console.log(
-            "storageArrayLength is correct after two modifyStorage:",
-            len
-        );
+        assertEq(len, 2, "storageArrayLength should be 2 after two modifyStorage");
+        console.log("storageArrayLength is correct after two modifyStorage:", len);
     }
 }

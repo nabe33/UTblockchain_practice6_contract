@@ -16,9 +16,7 @@ contract VariableExample {
     }
 
     // ローカル変数を使用して計算を行う関数
-    function calculateWithLocalVariable(
-        uint256 input
-    ) public pure returns (uint256) {
+    function calculateWithLocalVariable(uint256 input) public pure returns (uint256) {
         uint256 localVariable = input * 3; // ローカル変数
         return localVariable; // ローカル変数を返す
     }

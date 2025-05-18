@@ -13,28 +13,17 @@ contract LoopExampleTest is Test {
 
     function testSumInConstructor() public view {
         // コンストラクタでsumが正しく計算されているか
-        uint expected = 55; // 1+2+...+10
-        uint actual = loopExample.sum();
-        assertEq(
-            actual,
-            expected,
-            unicode"sumの値が正しくありません（コンストラクタ）"
-        );
-        console.log(
-            unicode"コンストラクタでsumが正しく計算されています:",
-            actual
-        );
+        uint256 expected = 55; // 1+2+...+10
+        uint256 actual = loopExample.sum();
+        assertEq(actual, expected, unicode"sumの値が正しくありません（コンストラクタ）");
+        console.log(unicode"コンストラクタでsumが正しく計算されています:", actual);
     }
 
     function testCalculateSumFunction() public view {
         // calculateSum関数が正しい値を返すか
-        uint expected = 55;
-        uint actual = loopExample.calculateSum();
-        assertEq(
-            actual,
-            expected,
-            unicode"calculateSumの戻り値が正しくありません"
-        );
+        uint256 expected = 55;
+        uint256 actual = loopExample.calculateSum();
+        assertEq(actual, expected, unicode"calculateSumの戻り値が正しくありません");
         console.log(unicode"calculateSum関数が正しい値を返しています:", actual);
     }
 }

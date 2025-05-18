@@ -22,9 +22,7 @@ contract DataLocationExample {
     /// @notice memory を使った例
     /// @param input 一時的に操作したい配列データ
     /// @return sum 配列 input の合計値
-    function processMemory(
-        uint256[] memory input
-    ) public pure returns (uint256 sum) {
+    function processMemory(uint256[] memory input) public pure returns (uint256 sum) {
         // memory は関数の実行中のみ有効な一時的領域
         // memory 内であれば要素の変更が可能だが、元のデータには影響しない
         input[0] = 999; // memory 内であれば書き込み可能
@@ -38,9 +36,7 @@ contract DataLocationExample {
     /// @notice calldata を使った例
     /// @param input external 関数呼び出し時の引数データ
     /// @return total 配列 input の合計値
-    function processCalldata(
-        uint256[] calldata input
-    ) external pure returns (uint256 total) {
+    function processCalldata(uint256[] calldata input) external pure returns (uint256 total) {
         // totalは暗黙的に0に初期化されている
         // calldata は読み取り専用の引数領域
         // input[0] = 123; // <-- この行はコンパイルエラーになる（書き込み不可）

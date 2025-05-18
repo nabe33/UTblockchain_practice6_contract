@@ -27,9 +27,7 @@ contract UserStorage {
     /// @param userAddr ユーザのアドレス
     /// @return name ユーザ名
     /// @return addr ユーザのアドレス
-    function getUser(
-        address userAddr
-    ) public view returns (string memory name, address addr) {
+    function getUser(address userAddr) public view returns (string memory name, address addr) {
         User memory user = users[userAddr];
         return (user.name, user.userAddr);
     }
@@ -37,11 +35,7 @@ contract UserStorage {
     /// @notice 呼び出し元自身のユーザ情報を取得する関数
     /// @return name ユーザ名
     /// @return addr ユーザのアドレス
-    function getMyUser()
-        public
-        view
-        returns (string memory name, address addr)
-    {
+    function getMyUser() public view returns (string memory name, address addr) {
         User memory user = users[msg.sender];
         return (user.name, user.userAddr);
     }

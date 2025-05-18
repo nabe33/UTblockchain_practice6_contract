@@ -15,28 +15,14 @@ contract VariableExampleTest is Test {
     function testMemberVariable() public {
         // 初期値が正しいか確認
         uint256 initialValue = variableExample.getMemberVariable();
-        assertEq(
-            initialValue,
-            100,
-            "Initial value of memberVariable is incorrect"
-        );
-        console.log(
-            "Initial value of memberVariable is correct:",
-            initialValue
-        );
+        assertEq(initialValue, 100, "Initial value of memberVariable is incorrect");
+        console.log("Initial value of memberVariable is correct:", initialValue);
 
         // メンバ変数を更新
         variableExample.updateMemberVariable(200);
         uint256 updatedValue = variableExample.getMemberVariable();
-        assertEq(
-            updatedValue,
-            200,
-            "Updated value of memberVariable is incorrect"
-        );
-        console.log(
-            "Updated value of memberVariable is correct:",
-            updatedValue
-        );
+        assertEq(updatedValue, 200, "Updated value of memberVariable is incorrect");
+        console.log("Updated value of memberVariable is correct:", updatedValue);
     }
 
     function testLocalVariable() public view {
@@ -63,16 +49,7 @@ contract VariableExampleTest is Test {
 
         // メンバ変数が更新されていることを確認
         uint256 afterMemberValue = variableExample.getMemberVariable();
-        assertEq(
-            afterMemberValue,
-            beforeMemberValue + input,
-            "Member variable update is incorrect"
-        );
-        console.log(
-            "Member variable update is correct. Before:",
-            beforeMemberValue,
-            "After:",
-            afterMemberValue
-        );
+        assertEq(afterMemberValue, beforeMemberValue + input, "Member variable update is incorrect");
+        console.log("Member variable update is correct. Before:", beforeMemberValue, "After:", afterMemberValue);
     }
 }
