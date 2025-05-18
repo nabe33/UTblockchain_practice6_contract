@@ -1,0 +1,68 @@
+$ forge test -vv
+[⠊] Compiling...
+No files changed, compilation skipped
+
+Ran 3 tests for test/DataLocationExample0Test.sol:DataLocationExample0Test
+[PASS] testModifyWithCalldata() (gas: 13234)
+Logs:
+  Contract deployed with initial storedArray = [1, 2, 3]
+  Success: Calldata array was read correctly in modifyWithCalldata
+
+[PASS] testModifyWithMemory() (gas: 35461)
+Logs:
+  Contract deployed with initial storedArray = [1, 2, 3]
+  Success: Memory array was modified correctly in modifyWithMemory
+  Success: Storage array was not modified by modifyWithMemory
+
+[PASS] testModifyWithStorage() (gas: 23698)
+Logs:
+  Contract deployed with initial storedArray = [1, 2, 3]
+  Success: storedArray correctly modified by modifyWithStorage
+
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 607.54µs (241.75µs CPU time)
+
+Ran 4 tests for test/DataLocationExampleTest.sol:DataLocationExampleTest
+[PASS] testModifyStorage() (gas: 86316)
+Logs:
+  storageArray length after modifyStorage is correct: 1
+  storageArray length after second modifyStorage is correct: 2
+
+[PASS] testProcessCalldata() (gas: 16017)
+Logs:
+  processCalldata returns correct sum: 60
+
+[PASS] testProcessMemory() (gas: 16678)
+Logs:
+  processMemory returns correct sum: 1004
+
+[PASS] testStorageArrayLength() (gas: 87238)
+Logs:
+  storageArrayLength is correct initially: 0
+  storageArrayLength is correct after one modifyStorage: 1
+  storageArrayLength is correct after two modifyStorage: 2
+
+Suite result: ok. 4 passed; 0 failed; 0 skipped; finished in 646.79µs (510.96µs CPU time)
+
+Ran 3 tests for test/VariavbleExampleTest.sol:VariableExampleTest
+[PASS] testDifferenceBetweenMemberAndLocal() (gas: 23793)
+Logs:
+  Local variable result is correct: 60
+  Member variable update is correct. Before: 100 After: 150
+
+[PASS] testLocalVariable() (gas: 13425)
+Logs:
+  Local variable calculation is correct: 30
+
+[PASS] testMemberVariable() (gas: 22140)
+Logs:
+  Initial value of memberVariable is correct: 100
+  Updated value of memberVariable is correct: 200
+
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 738.33µs (417.79µs CPU time)
+
+Ran 2 tests for test/Counter.t.sol:CounterTest
+[PASS] testFuzz_SetNumber(uint256) (runs: 256, μ: 32009, ~: 32398)
+[PASS] test_Increment() (gas: 31895)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 4.65ms (4.24ms CPU time)
+
+Ran 4 test suites in 114.71ms (6.64ms CPU time): 12 tests passed, 0 failed, 0 skipped (12 total tests)
