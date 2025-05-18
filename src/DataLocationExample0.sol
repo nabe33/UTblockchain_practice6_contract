@@ -30,9 +30,7 @@ contract DataLocationExample0 {
     }
 
     // calldataの違いを示す関数
-    function modifyWithCalldata(
-        uint256[] calldata inputArray
-    ) public pure returns (uint256) {
+    function modifyWithCalldata(uint256[] calldata inputArray) public pure returns (uint256) {
         // calldataは関数引数として読み取り専用で使用され、直接変更できない
         // inputArray[0] = 300; // エラー: calldataは変更できない
 

@@ -10,9 +10,7 @@ contract DataLocationExample0Test is Test {
     // テストの前準備として、コントラクトをデプロイ
     function setUp() public {
         dataLocationExample0 = new DataLocationExample0(); // 初期値でデプロイ
-        emit log_string(
-            "Contract deployed with initial storedArray = [1, 2, 3]"
-        );
+        emit log_string("Contract deployed with initial storedArray = [1, 2, 3]");
     }
 
     // Storageの挙動を確認するテスト
@@ -35,27 +33,18 @@ contract DataLocationExample0Test is Test {
         }
 
         if (!success) {
-            emit log_string(
-                "Error: storedArray was not modified correctly by modifyWithStorage"
-            );
+            emit log_string("Error: storedArray was not modified correctly by modifyWithStorage");
             for (uint256 i = 0; i < actual.length; i++) {
-                assertEq(
-                    actual[i],
-                    expected[i],
-                    "Mismatch in storedArray at index "
-                );
+                assertEq(actual[i], expected[i], "Mismatch in storedArray at index ");
             }
         } else {
-            emit log_string(
-                "Success: storedArray correctly modified by modifyWithStorage"
-            );
+            emit log_string("Success: storedArray correctly modified by modifyWithStorage");
         }
     }
 
     // Memoryの挙動を確認するテスト
     function testModifyWithMemory() public {
-        uint256[] memory modifiedArray = dataLocationExample0
-            .modifyWithMemory();
+        uint256[] memory modifiedArray = dataLocationExample0.modifyWithMemory();
 
         // Memoryのコピー内のみ変更が反映され、storedArrayには影響がない
         uint256[] memory expectedModified = new uint256[](3); // 配列を宣言
@@ -70,29 +59,16 @@ contract DataLocationExample0Test is Test {
 
         // Memoryの変更が正しいかチェック
         for (uint256 i = 0; i < modifiedArray.length; i++) {
-            assertEq(
-                modifiedArray[i],
-                expectedModified[i],
-                "Memory array was not modified correctly"
-            );
+            assertEq(modifiedArray[i], expectedModified[i], "Memory array was not modified correctly");
         }
-        emit log_string(
-            "Success: Memory array was modified correctly in modifyWithMemory"
-        );
+        emit log_string("Success: Memory array was modified correctly in modifyWithMemory");
 
         // Storageが変わっていないかチェック
-        uint256[] memory actualStoredArray = dataLocationExample0
-            .getStoredArray();
+        uint256[] memory actualStoredArray = dataLocationExample0.getStoredArray();
         for (uint256 i = 0; i < actualStoredArray.length; i++) {
-            assertEq(
-                actualStoredArray[i],
-                expectedOriginal[i],
-                "Storage array was unintentionally modified"
-            );
+            assertEq(actualStoredArray[i], expectedOriginal[i], "Storage array was unintentionally modified");
         }
-        emit log_string(
-            "Success: Storage array was not modified by modifyWithMemory"
-        );
+        emit log_string("Success: Storage array was not modified by modifyWithMemory");
     }
 
     // Calldataの挙動を確認するテスト
@@ -106,8 +82,6 @@ contract DataLocationExample0Test is Test {
         uint256 result = dataLocationExample0.modifyWithCalldata(inputArray);
         assertEq(result, inputArray[0], "Calldata was not read correctly");
 
-        emit log_string(
-            "Success: Calldata array was read correctly in modifyWithCalldata"
-        );
+        emit log_string("Success: Calldata array was read correctly in modifyWithCalldata");
     }
 }
