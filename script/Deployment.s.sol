@@ -2,7 +2,8 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Script.sol";
-import "../src/Counter.sol";
+// import "../src/Counter.sol";
+import "../src/UserStorage.sol";
 
 contract Deployment is Script {
     function run() external {
@@ -11,14 +12,12 @@ contract Deployment is Script {
 
         vm.startBroadcast(deployerPrivateKey);
 
-        Counter c = new Counter();
+        // Counter c = new Counter();
+        UserStorage us = new UserStorage();
 
         vm.stopBroadcast();
 
-        bytes memory encodedData = abi.encodePacked(
-            "deployed address: ",
-            vm.toString(address(c))
-        );
+        bytes memory encodedData = abi.encodePacked("User Storage deployed address: ", vm.toString(address(us)));
         console.log(string(encodedData));
         console.log("Private key: ", deployerPrivateKeyHex);
     }
