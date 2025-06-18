@@ -17,10 +17,7 @@ contract Deployment is Script {
 
         vm.stopBroadcast();
 
-        bytes memory encodedData = abi.encodePacked(
-            "User Storage deployed address: ",
-            vm.toString(address(am))
-        );
+        bytes memory encodedData = abi.encodePacked("User Storage deployed address: ", vm.toString(address(am)));
         console.log(string(encodedData));
         console.log("Private key: ", deployerPrivateKeyHex);
     }
