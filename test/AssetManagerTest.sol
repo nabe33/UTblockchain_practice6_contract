@@ -56,6 +56,37 @@ contract AssetManagerTest is Test {
         assetManager.getRegisteredAddress(1); // インデックス1は範囲外なのでrevertが発生する．revertが発生しない場合、テストは失敗する
         console.log(unicode"範囲外アクセス時に正しくrevertされました"); // revertが発生した場合、この行は実行されないため、テストは失敗しない
     }
+
+    function testRegistAssetAndGetAsset() public {
+        // テスト用アドレスを登録
+        address addr = address(this);
+        assetManager.registAddress(addr);
+
+        // 初期資産は0のはず
+        uint256 initialAsset = assetManager.getAsset(addr);
+        assertEq(initialAsset, 0, unicode"初期資産は0であるべきです");
+        console.log(unicode"初期資産が正しい: ", initialAsset);
+
+        // 資産を加算
+        assetManager.registAsset(1000);
+        uint256 assetAfterFirst = assetManager.getAsset(addr);
+        assertEq(assetAfterFirst, 1000, unicode"資産加算後の値が正しくありません");
+        console.log(unicode"資産加算後の値が正しい: ", assetAfterFirst);
+
+        // さらに資産を加算
+        assetManager.registAsset(500);
+        uint256 assetAfterSecond = assetManager.getAsset(addr);
+        assertEq(assetAfterSecond, 1500, unicode"2回目の資産加算後の値が正しくありません");
+        console.log(unicode"2回目の資産加算後の値が正しい: ", assetAfterSecond);
+    }
+
+    function testRegistAsset_NotRegistered() public {
+        // 登録していないアドレスで資産加算を試みる
+        vm.expectRevert("Sender is not a registered address");
+        assetManager.registAsset(100);
+        // revertが発生しなければこの行は実行される
+        console.log(unicode"未登録アドレスで資産加算時にrevertしませんでした（これは失敗です）");
+    }
 }
 
 // vm.expectrevert: Foundryのテストで「この後の操作でrevert（例外）が発生することを期待する」ことを明示するための機能
