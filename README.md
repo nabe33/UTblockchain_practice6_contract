@@ -1,5 +1,13 @@
 # UTblockchain_practice_contract
-東大ブロックチェーン公開講座の「スマコン開発学習」演習
+東大ブロックチェーン公開講座の「スマコン開発学習」演習 6回目（スライド70）
+AssetManager.solが主体
+
+## .env 設定
+
+```
+PRIVATE_KEY=
+CONTRACT_ADDRESS= 
+```
 
 ## Foundry
 
@@ -16,7 +24,14 @@ Foundry consists of:
 
 https://book.getfoundry.sh/
 
-## Usage
+## 動作手順
+
+### Format（省略可能）
+
+```shell
+$ forge fmt --check
+$ forge fmt
+```
 
 ### Build
 
@@ -27,22 +42,10 @@ $ forge build
 ### Test
 
 ```shell
-$ forge test
+$ forge test --match-path test/AssetManagerTest.sol -vv
 ```
 
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
+### Anvil起動
 
 ```shell
 $ anvil
@@ -51,10 +54,11 @@ $ anvil
 ### Deploy
 
 ```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+$ forge script script/Deployment.s.sol --rpc-url http://127.0.0.1:8545 --broadcast
 ```
 
 ### Cast
+Foundryに含まれるEVMとスマートコントラクトを操作するためのCLIツール
 
 ```shell
 $ cast <subcommand>
