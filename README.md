@@ -1,5 +1,6 @@
 # UTblockchain_practice_contract
 東大ブロックチェーン公開講座の「スマコン開発学習」演習 6回目（スライド70）
+
 AssetManager.solが主体
 
 ## .env 設定
@@ -26,45 +27,45 @@ https://book.getfoundry.sh/
 
 ## 動作手順
 
-### Format（省略可能）
+### 1． Format（省略可能）
 
 ```shell
 $ forge fmt --check
 $ forge fmt
 ```
 
-### Build
+### 2． Build
 
 ```shell
 $ forge build
 ```
 
-### Test
+### 3． Test
 
 ```shell
 $ forge test --match-path test/AssetManagerTest.sol -vv
 ```
 
-### Anvil起動
+### 4． Anvil起動
 
 ```shell
 $ anvil
 ```
 
-### Deploy
+### 5． Deploy
 
 ```shell
 $ forge script script/Deployment.s.sol --rpc-url http://127.0.0.1:8545 --broadcast
 ```
 
-### Cast
+### Cast：必要ならば
 Foundryに含まれるEVMとスマートコントラクトを操作するためのCLIツール
 
 ```shell
 $ cast <subcommand>
 ```
 
-### Help
+### 参考：Help
 
 ```shell
 $ forge --help
