@@ -1,5 +1,5 @@
 # UTblockchain_practice_contract
-東大ブロックチェーン公開講座の「スマコン開発学習」演習 6回目（スライド70）
+東大ブロックチェーン公開講座の「スマコン開発学習」演習 5回目（スライド70）完了
 
 AssetManager.solが主体
 
