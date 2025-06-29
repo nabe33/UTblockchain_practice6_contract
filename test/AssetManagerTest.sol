@@ -37,9 +37,21 @@ contract AssetManagerTest is Test {
         assertEq(count, 3, unicode"登録アドレス数が3であるべきです");
         console.log(unicode"複数アドレス登録時の登録数が正しい: ", count);
 
-        assertEq(assetManager.getRegisteredAddress(0), addr1, unicode"1番目のアドレスが一致しません");
-        assertEq(assetManager.getRegisteredAddress(1), addr2, unicode"2番目のアドレスが一致しません");
-        assertEq(assetManager.getRegisteredAddress(2), addr3, unicode"3番目のアドレスが一致しません");
+        assertEq(
+            assetManager.getRegisteredAddress(0),
+            addr1,
+            unicode"1番目のアドレスが一致しません"
+        );
+        assertEq(
+            assetManager.getRegisteredAddress(1),
+            addr2,
+            unicode"2番目のアドレスが一致しません"
+        );
+        assertEq(
+            assetManager.getRegisteredAddress(2),
+            addr3,
+            unicode"3番目のアドレスが一致しません"
+        );
         console.log(
             unicode"複数アドレスが順番通り正しく保存されています: ",
             assetManager.getRegisteredAddress(0),
@@ -63,29 +75,103 @@ contract AssetManagerTest is Test {
         assetManager.registAddress(addr);
 
         // 初期資産は0のはず
-        uint256 initialAsset = assetManager.getAsset(addr);
+        (uint256 initialAsset, ) = assetManager.getAssetWithHash(addr);
         assertEq(initialAsset, 0, unicode"初期資産は0であるべきです");
         console.log(unicode"初期資産が正しい: ", initialAsset);
 
         // 資産を加算
-        assetManager.registAsset(1000);
-        uint256 assetAfterFirst = assetManager.getAsset(addr);
-        assertEq(assetAfterFirst, 1000, unicode"資産加算後の値が正しくありません");
+        assetManager.registerAssetWithHash(1000, bytes32("dummy1"));
+        (uint256 assetAfterFirst, ) = assetManager.getAssetWithHash(addr);
+        assertEq(
+            assetAfterFirst,
+            1000,
+            unicode"資産加算後の値が正しくありません"
+        );
         console.log(unicode"資産加算後の値が正しい: ", assetAfterFirst);
 
         // さらに資産を加算
-        assetManager.registAsset(500);
-        uint256 assetAfterSecond = assetManager.getAsset(addr);
-        assertEq(assetAfterSecond, 1500, unicode"2回目の資産加算後の値が正しくありません");
+        assetManager.registerAssetWithHash(500, bytes32("dummy2"));
+        (uint256 assetAfterSecond, ) = assetManager.getAssetWithHash(addr);
+        assertEq(
+            assetAfterSecond,
+            1500,
+            unicode"2回目の資産加算後の値が正しくありません"
+        );
         console.log(unicode"2回目の資産加算後の値が正しい: ", assetAfterSecond);
     }
 
     function testRegistAsset_NotRegistered() public {
         // 登録していないアドレスで資産加算を試みる
         vm.expectRevert("Sender is not a registered address");
-        assetManager.registAsset(100);
+        assetManager.registerAssetWithHash(100, bytes32("dummy"));
         // revertが発生しなければこの行は実行される
-        console.log(unicode"未登録アドレスで資産加算時にrevertしませんでした（これは失敗です）");
+        console.log(
+            unicode"未登録アドレスで資産加算時にrevertしませんでした（これは失敗です）"
+        );
+    }
+
+    function testRegisterAssetWithHash_Success() public {
+        // テスト用アドレスを登録
+        address addr = address(this);
+        assetManager.registAddress(addr);
+
+        // 初期値確認
+        (uint256 initialAsset, bytes32 initialHash) = assetManager
+            .getAssetWithHash(addr);
+        assertEq(initialAsset, 0, unicode"初期資産は0であるべき");
+        assertEq(initialHash, bytes32(0), unicode"初期ハッシュ値は0であるべき");
+        console.log(unicode"初期資産: ", initialAsset);
+        console.logBytes32(initialHash);
+
+        // 資産とハッシュ値を登録
+        uint256 yen = 1000;
+        bytes32 hashValue = keccak256(abi.encodePacked("testdata1"));
+        assetManager.registerAssetWithHash(yen, hashValue);
+
+        (uint256 assetAfter, bytes32 hashAfter) = assetManager.getAssetWithHash(
+            addr
+        );
+        assertEq(assetAfter, yen, unicode"資産加算後の値が正しくありません");
+        assertEq(
+            hashAfter,
+            hashValue,
+            unicode"ハッシュ値が正しく登録されていません"
+        );
+        console.log(unicode"資産加算後の値: ", assetAfter);
+        console.logBytes32(hashAfter);
+
+        // さらに資産と別のハッシュ値を登録
+        uint256 yen2 = 500;
+        bytes32 hashValue2 = keccak256(abi.encodePacked("testdata2"));
+        assetManager.registerAssetWithHash(yen2, hashValue2);
+
+        (uint256 assetFinal, bytes32 hashFinal) = assetManager.getAssetWithHash(
+            addr
+        );
+        assertEq(
+            assetFinal,
+            yen + yen2,
+            unicode"2回目の資産加算後の値が正しくありません"
+        );
+        assertEq(
+            hashFinal,
+            hashValue2,
+            unicode"2回目のハッシュ値が正しく登録されていません"
+        );
+        console.log(unicode"2回目の資産加算後の値: ", assetFinal);
+        console.logBytes32(hashFinal);
+    }
+
+    function testRegisterAssetWithHash_NotRegistered() public {
+        // 未登録アドレスで資産とハッシュ値登録を試みる
+        uint256 yen = 100;
+        bytes32 hashValue = keccak256(abi.encodePacked("failtest"));
+        vm.expectRevert("Sender is not a registered address");
+        assetManager.registerAssetWithHash(yen, hashValue);
+        // revertが発生しなければこの行は実行される
+        console.log(
+            unicode"未登録アドレスでregisterAssetWithHash時にrevertしませんでした（これは失敗です）"
+        );
     }
 }
 

@@ -10,6 +10,8 @@ contract AssetManager {
     mapping(address => bool) public isRegistered;
     // 各アドレスの資産（円）を管理するマッピング
     mapping(address => uint256) public assets;
+    // 各アドレスのハッシュ値を管理するマッピング
+    mapping(address => bytes32) public hashValues;
 
     /// @notice 任意のアドレスを登録する関数（重複不可）
     /// @param addr 登録したいアドレス
@@ -31,17 +33,27 @@ contract AssetManager {
         return registeredAddresses[index];
     }
 
-    /// @notice 登録済みアドレスが資産を加算する関数
+    /// @notice 登録済みアドレスが資産とハッシュ値を登録する関数
     /// @param yen 加算したい資産額（円）
-    function registAsset(uint256 yen) public {
+    /// @param hashValue フロントエンドから送られてきたハッシュ値（SHA256）
+    function registerAssetWithHash(uint256 yen, bytes32 hashValue) public {
         require(isRegistered[msg.sender], "Sender is not a registered address");
         assets[msg.sender] += yen;
+        hashValues[msg.sender] = hashValue;
     }
 
-    /// @notice 指定アドレスの資産額を取得する関数
-    /// @param addr 資産を確認したいアドレス
-    /// @return 資産額（円）
-    function getAsset(address addr) public view returns (uint256) {
-        return assets[addr];
+    /// @notice 指定アドレスの資産額とハッシュ値を取得する関数
+    /// @param addr 資産とハッシュ値を確認したいアドレス
+    /// @return asset 資産額（円）
+    /// @return hashValue 登録されたハッシュ値
+    function getAssetWithHash(address addr) public view returns (uint256 asset, bytes32 hashValue) {
+        return (assets[addr], hashValues[addr]);
+    }
+
+    /// @notice 指定アドレスのハッシュ値のみを取得する関数
+    /// @param addr ハッシュ値を確認したいアドレス
+    /// @return hashValue 登録されたハッシュ値
+    function getHashValue(address addr) public view returns (bytes32 hashValue) {
+        return hashValues[addr];
     }
 }
